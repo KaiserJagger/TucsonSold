@@ -6,13 +6,17 @@ import helmet from 'helmet';
 
 // TODO HTTPS
 
-import router from '../routes/index';
+import RootRouter from '../routes/index';
 
 const server: Express = express();
 
 // Define SERVER to use /api and execute rootrouter from index.ts in routes
 // From this point onover: http://localhost/api/...
-server.use('/api', router);
+server.use('/api', RootRouter);
+
+
+// Static server
+server.use(express.static('public'));
 
 // TODO mongoose conection
 
