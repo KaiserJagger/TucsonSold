@@ -4,9 +4,11 @@
 import express,{ Request, Response} from "express";
 import helloRouter from "./HelloRouter";
 import { LogInfo } from "../utils/logger";
+import usersRouter  from "./UserRouter";
+
 
 // Server instace
-const app = express()
+const server = express()
 
 // Router instance
 let rootRouter = express.Router();
@@ -18,10 +20,12 @@ rootRouter.get('/', (req: Request, res: Response) => {
 });
 
 // Redirection to routers & controllers
-app.use('/', rootRouter); //http://localhost:3000/api/
-app.use('/hello', helloRouter); //http://localhost:3000/api/hello 
+server.use('/', rootRouter); //http://localhost:3000/api/
+server.use('/hello', helloRouter); //http://localhost:3000/api/hello --> HelloRouter
+// Add more routes to the app
+server.use('/users', usersRouter); //http://localhost:3000/api/users --> UsersRouter
 
-//Add more routes to the app
+//Add more routes to the server
 
-export default app;
+export default server;
 
