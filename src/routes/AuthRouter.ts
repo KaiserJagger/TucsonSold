@@ -7,7 +7,7 @@ import { IAuth } from "../domain/interfaces/IAuth.interfaces";
 //BCRYPT for password
 import bcrypt from 'bcrypt';
 
-//Middleware 
+// JWT Verifier Middleware 
 import { verifyToken } from "../middlewares/verifyToken.middleware";
 
 //Body Parser (Read JSON from Body in request)

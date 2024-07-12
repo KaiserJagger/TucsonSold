@@ -7,13 +7,16 @@ import bodyParser from "body-parser";
 //Body parser to read BODY from request
 let jsonParser = bodyParser.json()
 
+// JWT Verifier Middleware 
+import { verifyToken } from "../middlewares/verifyToken.middleware";
+
 // Router from express
 let usersRouter = express.Router();
 
 // http://localhost:3000/api/users?id=....
 usersRouter.route('/')
 // GET:
-.get(async (req: Request, res: Response) =>{
+.get(verifyToken, async (req: Request, res: Response) =>{
     // Obtain a Query param
     let id: any = req?.query?.id;
     LogInfo(`Query Param: ${id}`);
@@ -25,7 +28,7 @@ usersRouter.route('/')
     return res.status(response.status).send(response);
 })
 // DELETE:
-.delete(async (req:Request, res:Response) => {
+.delete(verifyToken, async (req:Request, res:Response) => {
     // Obtain a Query param
     let id: any = req?.query?.id;
     LogInfo(`Query Param: ${id}`);
@@ -37,7 +40,7 @@ usersRouter.route('/')
     return res.status(response.status).send(response);
 })
 // PUT:
-.put(async (req:Request, res:Response) => {
+.put(verifyToken, async (req:Request, res:Response) => {
      // Obtain a Query param
      let id: any = req?.query?.id;
      let name : any = req?.query?.name;
