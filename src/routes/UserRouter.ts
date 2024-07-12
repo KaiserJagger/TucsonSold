@@ -2,6 +2,10 @@
 import express , { Request, Response } from "express";
 import { UserController } from "../controller/UsersController";
 import { LogInfo } from "../utils/logger";
+import bodyParser from "body-parser";
+
+//Body parser to read BODY from request
+let jsonParser = bodyParser.json()
 
 // Router from express
 let usersRouter = express.Router();
@@ -18,7 +22,7 @@ usersRouter.route('/')
     // Obtain Response
     const response: any = await controller.getUsers(id);
     // Send Response
-    return res.send(response);
+    return res.status(response.status).send(response);
 })
 // DELETE:
 .delete(async (req:Request, res:Response) => {
@@ -30,27 +34,7 @@ usersRouter.route('/')
     // Obtain Response
     const response: any = await controller.deleteUser(id);
     // Send Response
-    return res.send(response);
-})
-// POST:
-.post(async (req:Request, res:Response) => {
-
-    let name : any = req?.query?.name;
-    let age : any = req?.query?.age;
-    let email : any = req?.query?.email;
-
-     // Controller Intance to execute method
-     const controller: UserController = new UserController();
-
-     let user= {
-        name: name || 'default',
-        email: email || 'default email',
-        age: age || 18
-     };
-     // Obtain Response
-     const response: any = await controller.createUser(user);
-     // Send Response
-     return res.send(response);
+    return res.status(response.status).send(response);
 })
 // PUT:
 .put(async (req:Request, res:Response) => {
@@ -73,7 +57,16 @@ usersRouter.route('/')
      const response: any = await controller.updateUser(id, user);
 
       // Send Response
-      return res.send(response);
+      return res.status(response.status).send(response);
 })
 
+
+
 export default usersRouter;
+
+/**
+ *Get document => 200 OK 
+ * Creation Documents => 201 OK
+ * Deletion of documents => 200 (entity) / 204 (No Return)
+ * Update of documents => 200 (entity) / 204 (No return)
+ */

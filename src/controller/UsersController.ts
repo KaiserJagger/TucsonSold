@@ -1,16 +1,16 @@
 import { Delete, Get, Post, Put, Query, Route, Tags } from 'tsoa';
-import { IUserControlle } from './interfaces';
+import { IUserController } from './interfaces';
 import { LogSuccess, LogError, LogWarning } from '../utils/logger';
 
 //ORM
 import { deleteUserByID, getAllUsers, getUserByID, createUser, updateUserByID } from '../domain/orm/User.orm'
-import { query } from 'express';
+
 
 @Route("/api/users")
 @Tags("UserController")
 
 
-export class UserController implements IUserControlle {
+export class UserController implements IUserController {
     /**
      * Endpoint to retreive the Users in the collection "Users" of DB
     */
@@ -41,7 +41,10 @@ export class UserController implements IUserControlle {
         if (id) {
             LogSuccess(`[/api/users] Delete users by ID: ${id}`)
             await deleteUserByID(id).then((r) => {
+                response = {
+                status: 204,
                 message: `User with id ${id} deleted successfully`
+                }
             });
         } else {
             LogWarning('[/api/users] Delete User request WITHOUT ID')
@@ -53,20 +56,6 @@ export class UserController implements IUserControlle {
         return response;
     }
 
- 
-@Post("/")
-    public async createUser(user: any): Promise<any> {
-      
-        let response: any = '';
-        
-        await createUser(user).then((r) =>{
-            LogSuccess(`[/api/users] Create user: ${user}`)
-            response = {
-                message: `User create: ${user.name}`
-            }
-        })
-        return response;
-    }
 
     @Put("/")
     public async updateUser(@Query()id:string ,user: any): Promise<any> {
@@ -76,12 +65,16 @@ export class UserController implements IUserControlle {
         if (id) {
             LogSuccess(`[/api/users] Update users by ID: ${id}`)
             await updateUserByID(id, user).then((r) => {
-                message: `User with id ${id} updated successfully`
+                response = {
+                message: `User with id ${id} updated successfully`,
+                status:204
+                }
             });
         } else {
             LogWarning('[/api/users] Update User request WITHOUT ID')
             response = {
-                message: 'Please, provide an ID to update an existing user'
+                message: 'Please, provide an ID to update an existing user',
+                status: 400
             }
         }
 
