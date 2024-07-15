@@ -76,12 +76,6 @@ export class AuthController implements IAuthController {
          if (id) {
              LogSuccess(`[/api/users] Get user Data by ID: ${id}`)
              response = await getUserByID(id);
-             //Remove the password
-             response.password = '';
-         } else{
-            LogSuccess('[/api/users] Get all users request')
-            response = await getAllUsers();
-            //TODO remove passwords from response 
          }
  
          return response;

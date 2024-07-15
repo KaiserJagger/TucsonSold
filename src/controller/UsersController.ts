@@ -15,7 +15,7 @@ export class UserController implements IUserController {
      * Endpoint to retreive the Users in the collection "Users" of DB
     */
     @Get("/")
-    public async getUsers(@Query() id?: string): Promise<any> {
+    public async getUsers(@Query()page: number, @Query()limit: number, @Query()id?: string): Promise<any> {
 
         let response: any = '';
 
@@ -24,7 +24,7 @@ export class UserController implements IUserController {
             response = await getUserByID(id);
         } else {
             LogSuccess('[/api/users] Get all Users request')
-            response = await getAllUsers();
+            response = await getAllUsers(page, limit);
         }
 
         return response;
