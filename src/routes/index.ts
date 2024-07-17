@@ -6,7 +6,7 @@ import helloRouter from "./HelloRouter";
 import { LogInfo } from "../utils/logger";
 import usersRouter  from "./UserRouter";
 import authRouter from "./AuthRouter";
-
+import katasRouter from "./KataRouter";
 
 // Server instace
 const server = express()
@@ -23,11 +23,12 @@ rootRouter.get('/', (req: Request, res: Response) => {
 // Redirection to routers & controllers
 server.use('/', rootRouter); //http://localhost:3000/api/
 server.use('/hello', helloRouter); //http://localhost:3000/api/hello --> HelloRouter
-// Add more routes to the app
+// User routes
 server.use('/users', usersRouter); //http://localhost:3000/api/users --> UsersRouter
 //Auth routes
 server.use('/auth', authRouter); //http://localhost:3000/api/auth --> AuthRouter
-//Add more routes to the server
+//Katas routes
+server.use('/katas', katasRouter); //http://localhost:3000/api/katas --> KatasRouter
 
 export default server;
 

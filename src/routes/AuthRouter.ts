@@ -31,10 +31,11 @@ authRouter.route('/register')
         hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         let newUser: IUser = {
-            name,
-            email,
+            name : name,
+            email : email,
             password: hashedPassword,
-            age
+            age: age,
+            katas: []
         }
 
         // Controller Intance to execute method
